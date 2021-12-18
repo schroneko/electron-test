@@ -6,13 +6,15 @@ app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def test():
     if request.method == "GET":
+        # return "This is GET Request"
         return """
-        下に整数aaaを入力してください。奇数か偶数か判定します
+        下に整数を入力してください。奇数か偶数か判定します
         <form action="/" method="POST">
         <input name="num"></input>
         </form>"""
     elif request.method == "POST":
         try:
+            # return "This is POST Request"
             return """
             {}は{}です！
             <form action="/" method="POST">

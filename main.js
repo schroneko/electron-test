@@ -1,7 +1,3 @@
-// Electron側の初期設定
-// const {
-//   PythonShell
-// } = require('python-shell');
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -14,10 +10,6 @@ app.on('window-all-closed', function () {
 
 // アプリ起動後の処理
 app.on('ready', function () {
-  // PythonShell.run('./app.py', null, function (err, result) { // exe:'./resources/app/app.py'    edit: './app.py'
-  //   if (err) throw err;
-  //   console.log(result);
-  // });
   let subpy = require('child_process').spawn('python', ['./app.py']);
 
   const rq = require('request-promise');
@@ -30,12 +22,8 @@ app.on('ready', function () {
       webPreferences: {
         nodeIntegration: true,
       }
-
     });
     mainWindow.loadURL(mainAddr);
-
-    // 開発ツールを有効化
-    // mainWindow.webContents.openDevTools();
 
     // 終了処理
     mainWindow.on('closed', function () {
