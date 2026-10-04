@@ -6,7 +6,9 @@
   "scripts": {
     "start": "npx electron .",
     "build-mac": "electron-builder --mac --x64",
-    "build-win": "electron-builder --win --x64"
+    "build-win": "electron-builder --win --x64",
+    "postinstall": "node scripts/apply-security-patches.cjs",
+    "test:security": "node --test tests/cache-security.test.cjs"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +20,8 @@
   "dependencies": {
     "python-shell": "^3.0.1",
     "request": "^2.88.2",
-    "request-promise": "^4.2.6"
+    "request-promise": "^4.2.6",
+    "patch-package": "8.0.1"
   },
   "build": {
     "appId": "com.yutahayashi.app",
@@ -40,5 +43,8 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     }
+  },
+  "overrides": {
+    "http-cache-semantics": "4.3.0"
   }
 }
