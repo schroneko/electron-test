@@ -12,7 +12,6 @@ app.on('window-all-closed', function () {
 app.on('ready', function () {
   let subpy = require('child_process').spawn('python', ['./app.py']);
 
-  const rq = require('request-promise');
   const mainAddr = 'http://localhost:5000';
 
   const openWindow = function () {
@@ -35,13 +34,17 @@ app.on('ready', function () {
   };
 
   const startUp = function () {
-    rq(mainAddr)
+    fetch(mainAddr, { signal: AbortSignal.timeout(5000) })
+      .then(response => {
+        if (!response.ok) throw new Error(`Backend returned HTTP ${response.status}`);
+        return response.text();
+      })
       .then(function (htmlString) {
         console.log('server started');
         openWindow();
       })
       .catch(function (err) {
-        startUp();
+        setTimeout(startUp, 100);
       });
   };
 
